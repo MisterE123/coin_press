@@ -9,3 +9,8 @@ init.lua was adapted from furnace.lua (default:furnace)
 as well as the code supplied in the forum linked above by Krock and from minetest modding book by Rubenwardy
 https://minetest.org/modbook/chapters/node_metadata.html
 and from lua_api.txt
+
+This mod depends on a custom mod coins. You can make your own coins mod, just make a mod named "coins", and have it define a craft item "coins:gold_coins"
+
+alternatively, you can edit this mod to use your server's pre-existing coins mod. Just change the depends list in mod.conf to not include [coins]
+and then edit the second line of init.lua where the local variable coin_item is declared to be the itemname of the gold coins in your mod.
