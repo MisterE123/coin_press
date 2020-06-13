@@ -218,3 +218,26 @@ minetest.register_node('coin_press:coin_press', {
 
 
 })
+
+
+if minetest.get_modpath("basic_materials") and minetest.get_modpath("stairs")then
+
+  minetest.register_craft({
+	output = "coin_press:coin_press",
+	recipe = {
+  		{"default:steelblock", "basic_materials:steel_strip", "default:steelblock"},
+  		{"stairs:slab_glass", "basic_materials:gear_steel", "stairs:slab_glass"},
+  		{"default:steelblock", "default:mese_crystal",  "default:steelblock"}
+  	}
+  })
+
+else
+  minetest.register_craft({
+  output = "coin_press:coin_press",
+  recipe = {
+      {"default:steelblock", "default:obsidian_glass", "default:steelblock"},
+      {"default:obsidian_glass", "default:steelblock", "default:obsidian_glass"},
+      {"default:steelblock", "default:diamond",  "default:steelblock"}
+    }
+  })
+end
