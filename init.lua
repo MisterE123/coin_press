@@ -64,14 +64,6 @@ local function allow_metadata_inventory_put(pos, listname, index, stack, player)
 	end
 end
 
-------------------------------------
---[[ I don't think I need this, since there is only 1 inventory location
-local function allow_metadata_inventory_move(pos, from_list, from_index, to_list, to_index, count, player)
-	local meta = minetest.get_meta(pos)
-	local inv = meta:get_inventory()
-	local stack = inv:get_stack(from_list, from_index)
-	return allow_metadata_inventory_put(pos, to_list, to_index, stack, player)
-end --]]
 ---------------------------------------
 -- if taking from an inventory position, you can only do it if you awn the protection or its not protected. If allowed, returns the number of items to be taken
 local function allow_metadata_inventory_take(pos, listname, index, stack, player)
