@@ -64,6 +64,14 @@ local function allow_metadata_inventory_put(pos, listname, index, stack, player)
 	end
 end
 
+------------------------------------
+--[[ I don't think I need this, since there is only 1 inventory location
+local function allow_metadata_inventory_move(pos, from_list, from_index, to_list, to_index, count, player)
+	local meta = minetest.get_meta(pos)
+	local inv = meta:get_inventory()
+	local stack = inv:get_stack(from_list, from_index)
+	return allow_metadata_inventory_put(pos, to_list, to_index, stack, player)
+end --]]
 ---------------------------------------
 -- if taking from an inventory position, you can only do it if you awn the protection or its not protected. If allowed, returns the number of items to be taken
 local function allow_metadata_inventory_take(pos, listname, index, stack, player)
@@ -96,6 +104,9 @@ local function coin_press_node_timer(pos)
     --then check if there is room in the output inventory for coins
     if output_stack:is_empty() or ((output_stack:get_name() == coin_item) and (output_stack:get_free_space() > 0 )) then
       inv:add_item("output",coin_item)  --put 1 coin into the output inventory
+      if minetest.get_modpath("mesecons_pistons") then
+        minetest.sound_play("piston_retract")
+      end
       meta:set_float("gold_percent",gold_percent - (100/coins_per_ingot))  --remove one percentage of the gold per coins_per_gold variable from the gold_percentage
       gold_percent = gold_percent - (100/coins_per_ingot) --update our local var
     else --If there isnt room in the output inv for coins,
@@ -115,6 +126,9 @@ local function coin_press_node_timer(pos)
       --then check if there is room in the output inventory for coins
       if output_stack:is_empty() or ((output_stack:get_name() == coin_item) and (output_stack:get_free_space() > 0 )) then
         inv:add_item("output",coin_item)  --put 1 coin into the output inventory
+        if minetest.get_modpath("mesecons_pistons") then
+          minetest.sound_play("piston_retract")
+        end
         meta:set_float("gold_percent", gold_percent - (100/coins_per_ingot))  --remove one percentage of the gold per coins_per_gold variable from the gold_percentage
         gold_percent = gold_percent - (100/coins_per_ingot) -- update our local var
       else --If there isnt room in the output inv for coins,
@@ -144,6 +158,7 @@ minetest.register_node('coin_press:coin_press', {
    groups = {choppy=2},
    paramtype = 'light',
    paramtype2 = 'facedir',
+   sounds = default.node_sound_metal_defaults(),
    selection_box = {
       type = 'fixed',
       fixed = {-.5, -.5, -.14, .5, .5, .49},
@@ -179,6 +194,9 @@ minetest.register_node('coin_press:coin_press', {
 
       if fields.stamp then
         minetest.get_node_timer(pos):start(press_time)
+        if minetest.get_modpath("mesecons_pistons") then
+          minetest.sound_play("piston_extend")
+        end
         --start the timer
       end
       if fields.pbutton then
@@ -210,7 +228,6 @@ minetest.register_node('coin_press:coin_press', {
 
 
 })
-
 
 if minetest.get_modpath("basic_materials") and minetest.get_modpath("stairs")then
 
