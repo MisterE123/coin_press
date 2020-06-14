@@ -155,7 +155,7 @@ minetest.register_node('coin_press:coin_press', {
    tiles = {name='coin_press_coin_press.png'},
    inventory_image = 'coin_press_coin_press_inventory.png',
    wield_image = "coin_press_coin_press_inventory.png",
-   groups = {choppy=2},
+   groups = {choppy=2, cracky=2},
    paramtype = 'light',
    paramtype2 = 'facedir',
    sounds = default.node_sound_metal_defaults(),
